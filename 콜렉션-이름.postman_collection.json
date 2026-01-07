@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "5ffeb8e8-5e9e-40d0-af6a-7b20376b97b5",
+		"name": "콜렉션-이름",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "51158794",
+		"_collection_link": "https://nara-makne0-5966066.postman.co/workspace/NARA-Kim's-Workspace~ffa328f7-fb43-4011-8fb0-3d25ec9dd66e/collection/51158794-5ffeb8e8-5e9e-40d0-af6a-7b20376b97b5?action=share&source=collection_link&creator=51158794"
+	},
+	"item": [
+		{
+			"name": "게시글-가져오기",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					"pm.test(\"응답 데이터가 iterationData와 완전히 일치한다\", function () {\r",
+					"\r",
+					"  // 1️⃣ 서버 응답 Body를 JSON 객체로 파싱\r",
+					"  // GET /posts/1 이므로 배열이 아니라 객체임\r",
+					"  const responseData = pm.response.json();\r",
+					"\r",
+					"  // 2️⃣ Collection Runner에 업로드한 JSON 파일에서\r",
+					"  // 현재 iteration의 값들을 가져옴\r",
+					"  //\r",
+					"  // iterationData는 \"한 row\" 기준이라\r",
+					"  // 배열이 아닌 객체 형태로 접근함\r",
+					"  const expectedData = {\r",
+					"    userId: pm.iterationData.get(\"userId\"),\r",
+					"    id: pm.iterationData.get(\"id\"),\r",
+					"    title: pm.iterationData.get(\"title\"),\r",
+					"    body: pm.iterationData.get(\"body\")\r",
+					"  };\r",
+					"\r",
+					"  // 3️⃣ 응답 데이터와 iterationData를 깊은 비교(eql)\r",
+					"  // 값 + 타입까지 전부 동일해야 통과\r",
+					"  pm.expect(responseData).to.eql(expectedData);\r",
+					"});"
+				]
+			}
+		}
+	]
+}
